@@ -1,0 +1,54 @@
+﻿@model EHealthCare.Models.PatientViewModel
+@{
+    ViewBag.Title = "Prescriptions";
+    Layout = "~/Views/Shared/_PatientLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-topline-theme">
+            <div class="card-head">
+                <header><i class="fa fa-medkit"></i> Prescription</header>
+                <div class="tools">
+                    <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
+                </div>
+            </div>
+            <div class="card-body ">
+                <table class="table table-striped table-bordered table-hover table-checkable order-column valign-middle" id="example4">
+                    <thead>
+                        <tr>
+                            <th class="center">Patient Name</th>
+                            <th class="center"> Medication Name </th>
+                            <th class="center"> Dose </th>
+                            <th class="center"> Unit </th>
+                            <th class="center"> Start Date </th>
+                            <th class="center"> End Date </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            if (Model.PrescriptionList.Count > 0)
+                            {
+                                foreach (var item in Model.PrescriptionList)
+                                {
+                                    <tr class="odd gradeX">
+                                        <td class="center">@item.Patient.FirstName</td>
+                                        <td class="center">@item.Medicine.Name</td>
+                                        <td class="center">@item.Dose</td>
+                                        <td class="center">@item.Unit</td>
+                                        <td class="center">@string.Format("{0:dd/MM/yyyy}", item.StartDate)</td>
+                                        <td class="center">@string.Format("{0:dd/MM/yyyy}", item.EndDate)</td>
+
+                                    </tr>
+                                }
+                            }
+
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,91 @@
+﻿@model EHealthCare.Models.AdminViewModel
+@{
+    /**/
+
+    ViewBag.Title = "AddPayment";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card card-topline-theme">
+            <div class="card-head">
+                <header><i class="fa fa-money"></i> Add Payment</header>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("AddPatientPayment", "AdminDashboard", FormMethod.Post))
+                {
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Patient Name</label> <span class="required"> * </span>
+                                @Html.DropDownListFor(m => m.Payment.PatientID, new SelectList(Model.PatientList, "PatientID","FirstName"),
+                                                         "Select Patient",new { @class= "form-control input-height",autocomplete="off" })
+                                @Html.ValidationMessageFor(x => x.Payment.PatientID, "", new { @class = "text=danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Payment Date</label> <span class="required"> * </span>
+                                @Html.TextBoxFor(x => x.Payment.PaymentDate, "{0:dd/MM/yyyy}", new { @class = "form-control input-height datepicker", placeholder = "Payment Date", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.Payment.PaymentDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Total Payment</label> <span class="required"> * </span>
+                                @Html.TextBoxFor(x => x.Payment.TotalPayment, new { @class = "form-control input-height", placeholder = "Total Payment", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.Payment.TotalPayment, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Payment Method</label> <span class="required"> * </span>
+                                @Html.DropDownListFor(x => x.Payment.PaymentType, new List<SelectListItem>
+                              {
+                                   new SelectListItem{ Text="Cash", Value = "cash" },
+                               }, "Select Method", new { @class = "form-control input-height", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.Payment.PaymentType, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Payment Status</label> <span class="required"> * </span>
+                                @Html.DropDownListFor(x => x.Payment.PaymentStatus, new List<SelectListItem>
+                                  {
+                                       new SelectListItem{ Text="Paid", Value = "Paid" },
+                                        new SelectListItem{ Text="UnPaid", Value = "Paid" },
+                                   }, "Select Method", new { @class = "form-control input-height", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.Prescription.Unit, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-info">Save</button>
+                                <button type="button" class="btn btn-cancel" onclick="reload()">Cancel</button>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            $(".datepicker").datepicker(
+                {
+                    changeYear: true,
+                    changeMonth: true,
+                    dateFormat: 'dd/mm/yy',
+                    maxDate: new Date,
+                    minDate: new Date(1900, 6, 12)
+                });
+        });
+    </script>

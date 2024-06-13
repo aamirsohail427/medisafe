@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewBag.Title = "ManageAppointment";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.css" />
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card card-topline-theme">
+            <div class="card-head">
+                <header><i class="fa fa-tasks"></i> Manage Appointments</header>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#appointmentModal">Create Appointment Slot</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="appointment-calendar" class="has-toolbar"> </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section SpecificScripts
+{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js"></script>
+    <script>
+        $('#appointment-calendar').fullCalendar({
+            header: {
+                left: 'title',
+                center: '',
+                right: 'prev,next'
+            },
+
+            locale: 'es',
+        });
+    </script>
+}
+    <div class="modal fade in" id="appointmentModal">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Create an Appointment Slot</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input class="form-control" placeholder="Enter Date" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Start Time</label>
+                                <input class="form-control" placeholder="Start Time" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Duration</label>
+                                <select class="form-control">
+                                    <option selected="selected" value="20">20 Min</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>End Time</label>
+                                <input class="form-control" placeholder="End Time" type="text">
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="" for="Appointment_Note">Note</label>
+                                <textarea class="form-control" cols="20" data-val="true" data-val-length="Note cannot be longer than 200 characters." data-val-length-max="200" id="Appointment_Note" name="Appointment.Note" placeholder="Enter Note" rows="2"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                   <div class="row">
+                       <div class="col-md-12">
+                           <div class="pull-right">
+                               <button type="submit" class="btn btn-sm btn-primary">Save</button>
+                               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                           </div>
+                       </div>
+                   </div>
+                </div>
+               
+            </div>
+
+        </div>
+    </div>

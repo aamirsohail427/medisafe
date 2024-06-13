@@ -1,0 +1,95 @@
+﻿@model EHealthCare.Models.AppointmentViewModel
+
+@{
+
+    ViewBag.Title = "RequestAppointment";
+    Layout = "~/Views/Shared/_PatientLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card card-topline-theme">
+            <div class="card-head">
+                <header><i class="fa fa-tasks"></i> Request Appointments</header>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("BookAppointment", "Patient", FormMethod.Post))
+                {
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Select Doctor</label>
+                                @Html.DropDownListFor(m => m.Appointment.DoctorID, new SelectList(Model.DoctorsList, "DoctorID", "FirstName"),
+                                                   "Select Doctor",new { @class= "form-control input-height",autocomplete="off" })
+                                @Html.ValidationMessageFor(x => x.Appointment.DoctorID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Appointment Start Time</label>
+                                @Html.TextBoxFor(a => a.Appointment.FromTime, new { @class = "form-control input-height timepicker", placeholder = "Appointment Start Time", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.Appointment.FromTime, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Appointment End Time</label>
+                                @Html.TextBoxFor(a => a.Appointment.ToTime, new { @class = "form-control input-height timepicker", placeholder = "Appointment End Time", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.Appointment.ToTime, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Appointment Date</label>
+                                @Html.TextBoxFor(a => a.Appointment.AppointmentDate, new { @class = "form-control input-height datepicker", placeholder = "Appointment Date", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.Appointment.AppointmentDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <form action="/Payment/Charge" method="POST">
+                                <article>
+                                    <label>Amount: $2000.00</label>
+                                </article>
+                                <script src="//checkout.stripe.com/v2/checkout.js"
+                                        class="stripe-button"
+                                        data-key="@ViewBag.StripePublishKey"
+                                        data-locale="auto"
+                                        data-description="Sample Charge"
+                                        data-amount="500">
+                                </script>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="pull-right">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-info">Save</button>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.timepicker').timepicker();
+    });
+    $(function () {
+        $(".datepicker").datepicker(
+            {
+                changeYear: true,
+                changeMonth: true,
+                dateFormat: 'dd/mm/yy',
+                minDate: 0
+            });
+    });
+</script>

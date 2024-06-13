@@ -1,0 +1,480 @@
+﻿@{
+    int UserID = Convert.ToInt32(Session["UserId"]);
+
+    int userType = Convert.ToInt32(Session["UserType"]);
+    int CurrentUser = Convert.ToInt32(Session["UserId"]);
+    EHealthCare.Models.EHealthCareEntities db = new EHealthCare.Models.EHealthCareEntities();
+    List<EHealthCare.Models.Chat> ListChats = db.Chats.Where(a => a.SecondChatUserID == CurrentUser).ToList();
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    <!--Jquery-->
+    <script src="~/WebAssets/js/jquery.min.js" type="text/javascript"></script>
+    <style>
+        .team-list {
+            overflow-y: auto;
+            max-height: 300px;
+        }
+
+        .team-member:first-of-type {
+            margin-top: 0;
+        }
+
+        .team-member {
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 700;
+            border: 1px solid transparent;
+            border-top-color: #e4e4e4;
+            padding: 12px 15px;
+            margin-top: -1px;
+        }
+
+            .team-member:hover {
+                background: #edf7fd;
+                border-color: #d3ecfa;
+                border-radius: 3px;
+                position: relative;
+            }
+
+        .team-member {
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 700;
+            border: 1px solid transparent;
+            border-top-color: #e4e4e4;
+            padding: 8px 6px;
+            margin-top: -1px;
+        }
+
+            .team-member > .avatar {
+                display: inline-block;
+                margin-right: 5px;
+                position: relative;
+                top: -1px;
+            }
+        /* width */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #e4e4e4;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #e4e4e4;
+        }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
+    </style>
+
+    <!-- Favicons -->
+    <link href="~/HomeAssets/img/faviconE.png" rel="icon">
+    <link href="~/HomeAssets/img/faviconE.png" rel="apple-touch-icon">
+    <!-- icons -->
+    <link href="~/WebAssets/js/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" />
+    <link href="~/WebAssets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+    <!--bootstrap -->
+    <link href="~/WebAssets/js/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/WebAssets/js/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Theme Styles -->
+    <link href="~/WebAssets/css/theme_style.css" rel="stylesheet" id="rt_style_components" type="text/css" />
+    <link href="~/WebAssets/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="~/WebAssets/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/WebAssets/css/responsive.css" rel="stylesheet" type="text/css" />
+
+    <!--Material icons-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!--Time picker-->
+    <link href="~/WebAssets/css/timepicki.css" rel="stylesheet" />
+
+    <!-- data tables -->
+    <link href="~/WebAssets/js/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- custom -->
+    <link href="~/WebAssets/css/custom.css" rel="stylesheet" />
+    <link href="~/WebAssets/css/jquery-ui.css" rel="stylesheet" />
+    <link href="~/WebAssets/css/pnotify.custom.min.css" rel="stylesheet" />
+
+    <!--Jquery-->
+    <script src="~/WebAssets/js/jquery.min.js" type="text/javascript"></script>
+    <!-- Phone Masking-->
+    <script src="~/WebAssets/js/jquery.maskedinput.js"></script>
+</head>
+<body class="page-header-fixed sidemenu-closed-hidelogo page-content-white page-md">
+    <div class="page-wrapper">
+        <input type="hidden" value="@Convert.ToString(Session["token"])" id="token" />
+        <input type="hidden" value="@UserID" id="userid" />
+        <!-- start header -->
+        <div class="page-header navbar navbar-fixed-top">
+            <div class="page-header-inner ">
+                <!-- logo start -->
+                <div class="page-logo">
+                    <a href="javascript:void(0);">
+                        @*<img src="~/WebAssets/img/logoPH.png" alt="logo" class="logo-default" />*@
+                    </a>
+                    <div class="menu-toggler sidebar-toggler">
+                        <span></span>
+                    </div>
+                </div>
+                <!-- logo end -->
+                <!-- start mobile menu -->
+                <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span></span>
+                </a>
+                <!-- end mobile menu -->
+                <!-- start header menu -->
+                <div class="top-menu">
+                    <ul class="nav navbar-nav pull-right">
+                        <!-- start manage user dropdown -->
+                        <li class="dropdown dropdown-user">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <img alt="" class="img-circle " src="@Session["UserPic"].ToString()" onerror="this.onerror=null;this.src='../WebAssets/img/avatar-image.png';" />
+
+                                <span class="username username-hide-on-mobile"> @Session["UserName"].ToString() </span>
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-default">
+                                <li>
+                                    <a href="@Url.Action("Logout","Login")">
+                                        <i class="icon-logout"></i> Log Out
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- end manage user dropdown -->
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- end header -->
+        <div class="clearfix"> </div>
+        <!-- start page container -->
+        <div class="page-container">
+            <!-- start sidebar menu -->
+            <div class="sidebar-container">
+                <div class="sidemenu-container navbar-collapse collapse fixed-menu">
+                    <div id="remove-scroll">
+                        <ul class="sidemenu  page-header-fixed" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
+                            <li class="sidebar-toggler-wrapper hide">
+                                <div class="sidebar-toggler">
+                                    <span></span>
+                                </div>
+                            </li>
+                            <li class="sidebar-user-panel">
+                                <div class="user-panel">
+                                    <div class="pull-left image">
+                                        <img src="@Session["UserPic"].ToString()" class="img-circle user-img-circle" alt="User Image" onerror="this.onerror=null;this.src='../WebAssets/img/avatar-image.png';" />
+
+                                    </div>
+                                    <div class="pull-left info">
+                                        <p> @Session["UserName"].ToString()</p>
+                                    </div>
+                                </div>
+                            </li>
+
+
+                            @if (userType == 3 || userType == 1)
+                            {
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Dashboard","AdminDashboard")" class="nav-link ">
+                                        <i class="fa fa-tachometer"></i> <span class="title">Dashboard</span>
+                                    </a>
+                                </li>
+                                if (userType == 3)
+                                {
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("ManageProfile","Doctor")" class="nav-link ">
+                                            <i class="fa fa-user"></i> <span class="title">Manage Profile</span>
+                                        </a>
+                                    </li>
+                                }
+
+                                <li class="nav-item  ">
+                                    <a href="javascript:void(0);" class="nav-link nav-toggle">
+                                        <i class="fa fa-book"></i>
+                                        <span class="title">Appointment</span><span class="arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+
+                                        <li class="nav-item  ">
+                                            <a href="@Url.Action("BookAppointment","AdminDashboard")" class="nav-link ">
+                                                <span class="title">Book Appointment</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item  ">
+                                            <a href="@Url.Action("ViewAllAppointments","AdminDashboard")" class="nav-link ">
+                                                <span class="title">View All Appointment</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item  ">
+                                    <a href="javascript:void(0);" class="nav-link nav-toggle">
+                                        <i class="fa fa-user"></i>
+                                        <span class="title">Patients</span> <span class="arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-item  ">
+                                            <a href="@Url.Action("ViewAllPatients","AdminDashboard")" class="nav-link ">
+                                                <span class="title">All Patients</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item  ">
+                                            <a href="@Url.Action("AddPatient","AdminDashboard")" class="nav-link ">
+                                                <span class="title">Add Patient</span>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                            }
+
+                            @if (userType == 1)
+                            {
+                                <li class="nav-item  ">
+                                    <a href="javascript:void(0);" class="nav-link nav-toggle">
+                                        <i class="fa fa-user-md"></i>
+                                        <span class="title">Doctors</span> <span class="arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-item  ">
+                                            <a href="@Url.Action("ViewAllDoctors","AdminDashboard")" class="nav-link ">
+                                                <span class="title">All Doctor</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item  ">
+                                            <a href="@Url.Action("AddDoctor","AdminDashboard")" class="nav-link ">
+                                                <span class="title">Add Doctor</span>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                                <li class="nav-item  ">
+                                    <a href="javascript:void(0);" class="nav-link nav-toggle">
+                                        <i class="fa fa-users"></i>
+                                        <span class="title">Other Staff</span> <span class="arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-item  ">
+                                            <a href="@Url.Action("AllStaff","AdminDashboard")" class="nav-link ">
+                                                <span class="title">All Staff</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item  ">
+                                            <a href="@Url.Action("AddStaff","AdminDashboard")" class="nav-link ">
+                                                <span class="title">Add Staff</span>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item  ">
+                                    <a href="javascript:void(0)" class="nav-link nav-toggle">
+                                        <i class="fa fa-bed"></i>
+                                        <span class="title">Room Allotment</span> <span class="arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-item  ">
+                                            <a href="@Url.Action("AllotedRoom","AdminDashboard")" class="nav-link ">
+                                                <span class="title">Alloted Rooms</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item  ">
+                                            <a href="@Url.Action("NewRoomAllotment","AdminDashboard")" class="nav-link ">
+                                                <span class="title">New Allotment</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item  ">
+                                    <a href="javascript:void(0)" class="nav-link nav-toggle">
+                                        <i class="fa fa-money"></i>
+                                        <span class="title">Payments</span> <span class="arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-item">
+                                            <a href="@Url.Action("Payment","AdminDashboard")" class="nav-link ">
+                                                <span class="title">Payments</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item  ">
+                                            <a href="@Url.Action("AddPayment","AdminDashboard")" class="nav-link ">
+                                                <span class="title">Add Payments</span>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                            }
+
+                            @if (userType == 1 || userType == 3)
+                            {
+                                <li class="nav-item  ">
+                                    <a href="javascript:void(0)" class="nav-link nav-toggle">
+                                        <i class="fa fa-medkit"></i>
+                                        <span class="title">Prescriptions</span> <span class="arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-item">
+                                            <a href="@Url.Action("AddPrescription","AdminDashboard")" class="nav-link ">
+                                                <span class="title">Add Prescription</span>
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item  ">
+                                            <a href="@Url.Action("Prescriptions","AdminDashboard")" class="nav-link ">
+                                                <span class="title">View Prescription</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item  ">
+                                    <a href="javascript:void(0)" class="nav-link nav-toggle">
+                                        <i class="fa fa-file"></i>
+                                        <span class="title">Lab Tests</span> <span class="arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-item">
+                                            <a href="@Url.Action("AddLabTest","AdminDashboard")" class="nav-link ">
+                                                <span class="title">Add Patient Test</span>
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item  ">
+                                            <a href="@Url.Action("PatientTests","AdminDashboard")" class="nav-link ">
+                                                <span class="title">View Patient Test</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item  ">
+                                    <a href="javascript:void(0)" class="nav-link nav-toggle">
+                                        <i class="fa fa-comment"></i>
+                                        <span class="title">Messages</span> <span class="arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        @foreach (var item in ListChats)
+                                        {
+                                            EHealthCare.Models.Patient pat = new EHealthCare.Models.Patient();
+                                            pat = db.Patients.FirstOrDefault(a => a.UserID == item.FirstChatUserID);
+                                            <li class="nav-item">
+                                                <a href="/Chat/ChatBox?ChatIDD=@item.ChatId" class="nav-link ">
+                                                    <span class="title">@pat.FirstName</span>
+                                                </a>
+                                            </li>
+                                        }
+
+                                    </ul>
+                                </li>
+                            }
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- end sidebar menu -->
+            <!-- start page content -->
+            <div class="page-content-wrapper">
+                <div class="page-content">
+                    <!-- add content here -->
+                    @RenderBody()
+                </div>
+            </div>
+            <!-- end page content -->
+
+        </div>
+        <!-- end page container -->
+        <!-- start footer -->
+        <div class="page-footer">
+            <div class="page-footer-inner">
+                2019 &copy; Copyright <strong>Optimistic</strong>. All Rights Reserved
+                @*<a href="javascript:void(0);" target="_top">Optimistic</a>*@
+            </div>
+            <div class="scroll-to-top">
+                <i class="icon-arrow-up"></i>
+            </div>
+        </div>
+        <!-- end footer -->
+    </div>
+
+    <!-- start js include path -->
+    <script src="~/WebAssets/js/jquery-ui.js"></script>
+
+    <!--validation-->
+    <script src="~/WebAssets/js/jquery-validation/js/jquery.validate.min.js"></script>
+    <script src="~/WebAssets/js/jquery.form.js"></script>
+    <script src="~/WebAssets/js/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/WebAssets/js/jquery.unobtrusive-ajax.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+    <script src="~/WebAssets/js/jquery.blockui.min.js" type="text/javascript"></script>
+
+    <!-- calendar -->
+    <script src="~/WebAssets/js/moment.min.js" type="text/javascript"></script>
+
+    <!-- common JS -->
+    <script src="~/WebAssets/js/generic.js"></script>
+    <script src="~/WebAssets/js/common.js"></script>
+
+    <!-- bootstrap -->
+    <script src="~/WebAssets/js/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/WebAssets/js/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+    <!-- counterup -->
+
+    <script src="~/WebAssets/js/counterup/jquery.waypoints.min.js"></script>
+    <script src="~/WebAssets/js/counterup/jquery.counterup.min.js"></script>
+
+    <script src="~/WebAssets/js/jquery.slimscroll.js"></script>
+    <script src="~/WebAssets/js/app.js" type="text/javascript"></script>
+    <script src="~/WebAssets/js/layout.js" type="text/javascript"></script>
+
+    <!-- chart js -->
+    <script src="~/WebAssets/js/chart-js/Chart.bundle.js"></script>
+    <script src="~/WebAssets/js/chart-js/utils.js"></script>
+    <script src="~/HomeAssets/js/opentok.js"></script>
+    <script src="~/HomeAssets/js/opentokjs.js"></script>
+    @*<script src="~/WebAssets/js/chart-js/chartjs-data.js"></script>*@
+
+    <!-- data tables -->
+    <script src="~/WebAssets/js/datatables/datatables.min.js" type="text/javascript"></script>
+    <script src="~/WebAssets/js/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+    <script src="~/WebAssets/js/table_data.js" type="text/javascript"></script>
+    <!-- PNotify -->
+    <script src="~/WebAssets/js/pnotify.custom.min.js"></script>
+    <script src="~/WebAssets/js/generic.js"></script>
+    <!--Time picker-->
+    <script src="~/WebAssets/js/timepicki.js"></script>
+
+    @RenderSection("SpecificScripts", required: false)
+
+    <script>
+        $('.timepick').timepicki();
+    </script>
+    <script>
+        function reload() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,446 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+
+}
+<link href="https://fonts.googleapis.com/css?family=Dosis:400,500,600,700,800" rel="stylesheet">
+<style>
+    .cta-title {
+        font-family: Dosis,sans-serif !important;
+        font-size: 45px !important
+    }
+
+    .cta-text {
+        font-family: Dosis,sans-serif !important;
+        font-size: 31px !important
+    }
+
+    .section-title {
+        font-family: Dosis,sans-serif !important;
+    }
+
+    .welcome {
+        font-family: Dosis,sans-serif !important;
+    }
+
+    #facts .counters span {
+        font-size: 45px !important;
+        display: block;
+        color: #2dc997;
+        font-family: Dosis,sans-serif;
+        font-weight: 800;
+    }
+
+    #contact .form button[type="button"] {
+        background: #2dc997;
+        border: 0;
+        padding: 10px 24px;
+        color: #fff;
+        transition: 0.4s;
+    }
+
+    #msg {
+        font-family: Dosis,sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+        color: #2dc997 !important
+    }
+
+    #error_message {
+        color: orangered;
+        font-family: Dosis,sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+    }
+</style>
+<!--==========================
+Header
+============================-->
+<header id="header">
+    <div class="container">
+
+        <div id="logo" class="pull-left">
+            @*<a href="#hero"><img src="~/HomeAssets/img/logo.png" alt="" title="" /></a>*@
+            <!-- Uncomment below if you prefer to use a text logo -->
+            <h1 class="welcome"><a href="#hero">Medisafe</a></h1>
+        </div>
+
+        <nav id="nav-menu-container">
+            <ul class="nav-menu">
+                <li class="menu-active"><a href="#hero">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#services">Our Services</a></li>
+                <li><a href="#team">Our Doctors</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+                <li><a href="@Url.Action("Login","Login")">Login</a></li>
+            </ul>
+        </nav><!-- #nav-menu-container -->
+    </div>
+</header><!-- #header -->
+<!--==========================
+  Hero Section
+============================-->
+<section id="hero">
+    <div class="hero-container">
+        <h1 class="welcome">Welcome to Optimistic</h1>
+        <h2>Your life.Our passion.Discover Regional One Health</h2>
+    </div>
+</section><!-- #hero -->
+
+<main id="main">
+
+    <!--==========================
+      About Us Section
+    ============================-->
+    <section id="about">
+        <div class="container">
+            <div class="row about-container">
+
+                <div class="col-lg-6 content order-lg-1 order-2">
+                    <h2 class="title welcome">Few Words About Us</h2>
+                    <p class="text-justify">
+                        Our experience with more than 60 hospitals, academic medical centers and health insurance companies gives us a unique skillset to work with your executives, doctors, administrators and staff. We understand the challenges of working within a highly regulated workplace and have more than 10 years of experience doing so.
+                    </p>
+
+                    <div class="icon-box wow fadeInUp">
+                        <div class="icon"><i class="fa fa-shopping-bag"></i></div>
+                        <h4 class="title"><a href="">Safety</a></h4>
+                        <p class="description">Health is the state of well being of a person, physically, mentally and emotionally.</p>
+                    </div>
+
+                    <div class="icon-box wow fadeInUp" data-wow-delay="0.2s">
+                        <div class="icon"><i class="fa fa-photo"></i></div>
+                        <h4 class="title"><a href="">Love</a></h4>
+                        <p class="description">Good health is human beings most significant essentiality for survival and existence.</p>
+                    </div>
+
+                    <div class="icon-box wow fadeInUp" data-wow-delay="0.4s">
+                        <div class="icon"><i class="fa fa-bar-chart"></i></div>
+                        <h4 class="title"><a href="">Attitude</a></h4>
+                        <p class="description">A positive attitude towards life will make you healthier and live longer.</p>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-6 background order-lg-2 order-1 wow fadeInRight"></div>
+            </div>
+
+        </div>
+    </section><!-- #about -->
+    <!--==========================
+      Facts Section
+    ============================-->
+    <section id="facts">
+        <div class="container wow fadeIn">
+            <div class="section-header">
+                <h3 class="section-title">Facts</h3>
+                <p class="section-description">Our some Facts that are currently we are performing</p>
+            </div>
+            <div class="row counters">
+
+                <div class="col-lg-3 col-6 text-center">
+                    <span data-toggle="counter-up">18</span>
+                    <p>Doctors</p>
+                </div>
+
+                <div class="col-lg-3 col-6 text-center">
+                    <span data-toggle="counter-up">75</span>
+                    <p>Patients</p>
+                </div>
+
+                <div class="col-lg-3 col-6 text-center">
+                    <span data-toggle="counter-up">24</span>
+                    <p>Hours Of Support</p>
+                </div>
+
+                <div class="col-lg-3 col-6 text-center">
+                    <span data-toggle="counter-up">15</span>
+                    <p>Hard Workers</p>
+                </div>
+
+            </div>
+
+        </div>
+    </section><!-- #facts -->
+    <!--==========================
+      Services Section
+    ============================-->
+    <section id="services">
+        <div class="container wow fadeIn">
+            <div class="section-header">
+                <h3 class="section-title">Services</h3>
+                <p class="section-description">We provide health care services at your home in Lahore</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="box">
+                        <div class="icon"><a href=""><i class="fa fa-desktop"></i></a></div>
+                        <h4 class="title">
+                            <a href="">
+                                PATIENT CARE SERVICES
+                            </a>
+                        </h4>
+                        <p class="description">We provide a wide range of home health care and nursing care services for patients and elderly.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
+                    <div class="box">
+                        <div class="icon"><a href=""><i class="fa fa-bar-chart"></i></a></div>
+                        <h4 class="title"><a href="">BABYSITTING SERVICES</a></h4>
+                        <p class="description">A babysitter can assist your child with daily activities such as feeding, clothing, and bathing.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.6s">
+                    <div class="box">
+                        <div class="icon"><a href=""><i class="fa fa-paper-plane"></i></a></div>
+                        <h4 class="title"><a href="">CUPPING THERAPY</a></h4>
+                        <p class="description">Hijama or cupping is a safe, non-invasive, economical way of curing and preventing many diseases.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="box">
+                        <div class="icon"><a href=""><i class="fa fa-photo"></i></a></div>
+                        <h4 class="title"><a href="">PHYSIOTHERAPY</a></h4>
+                        <p class="description">At We-Care.pk, we provide you physiotherapy services in the comfort of your home.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
+                    <div class="box">
+                        <div class="icon"><a href=""><i class="fa fa-road"></i></a></div>
+                        <h4 class="title"><a href="">Infant Care Services</a></h4>
+                        <p class="description">A baby nurse helps support the new mom and the family after the baby arrives.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.6s">
+                    <div class="box">
+                        <div class="icon"><a href=""><i class="fa fa-shopping-bag"></i></a></div>
+                        <h4 class="title"><a href="">Cupping & Hijama Therapy</a></h4>
+                        <p class="description">Hijama or cupping is a safe, non-invasive, economical way of curing and preventing many diseases.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section><!-- #services -->
+    <!--==========================
+    Call To Action Section
+    ============================-->
+    <section id="call-to-action">
+        <div class="container wow fadeIn">
+            <div class="row">
+                <div class="col-lg-9 text-center text-lg-left">
+                    <h3 class="cta-title">Call Us Today</h3>
+                    <p class="cta-text">
+                        Our rates are highly compititive! . To talk our health care representative <br />
+                        Call Us Today at 0301-4555690
+
+
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section><!-- #call-to-action -->
+    <!--==========================
+      Team Section
+    ============================-->
+    <section id="team">
+        <div class="container wow fadeInUp">
+            <div class="section-header">
+                <h3 class="section-title">Our Doctors</h3>
+                <p class="section-description">We are team of talanted Doctos making your life Better</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="member">
+                        <div class="pic"><img src="~/HomeAssets/img/doc1.jpg" alt=""></div>
+                        <h4>Dr.Ahmad Shakeel </h4>
+                        <span>ENT Specialist</span>
+                        <div class="social">
+                            <a href="javascript:void(0);"><i class="fa fa-twitter"></i></a>
+                            <a href="javascript:void(0);"><i class="fa fa-facebook"></i></a>
+                            <a href="javascript:void(0);"><i class="fa fa-google-plus"></i></a>
+                            <a href="javascript:void(0);"><i class="fa fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="member">
+                        <div class="pic"><img src="~/HomeAssets/img/doc2.jpg" alt="" /></div>
+                        <h4>Dr.Shoaib Ahmed</h4>
+                        <span>Cardiac Surgeon</span>
+                        <div class="social">
+                            <a href="javascript:void(0);"><i class="fa fa-twitter"></i></a>
+                            <a href="javascript:void(0);"><i class="fa fa-facebook"></i></a>
+                            <a href="javascript:void(0);"><i class="fa fa-google-plus"></i></a>
+                            <a href="javascript:void(0);"><i class="fa fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="member">
+
+                        <div class="pic"><img src="~/HomeAssets/img/doc3.jpg" /></div>
+                        <h4>Dr.Muhammad Farooq</h4>
+                        <span>Pathologist</span>
+                        <div class="social">
+                            <a href="javascript:void(0);"><i class="fa fa-twitter"></i></a>
+                            <a href="javascript:void(0);"><i class="fa fa-facebook"></i></a>
+                            <a href="javascript:void(0);"><i class="fa fa-google-plus"></i></a>
+                            <a href="javascript:void(0);"><i class="fa fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="member">
+                        <div class="pic"> <img src="~/HomeAssets/img/doc4.jpg" /></div>
+                        <h4>Dr.Zafar-Ul-Haq</h4>
+                        <span>Anaesthetist</span>
+                        <div class="social">
+                            <a href="javascript:void(0);"><i class="fa fa-twitter"></i></a>
+                            <a href="javascript:void(0);"><i class="fa fa-facebook"></i></a>
+                            <a href="javascript:void(0);"><i class="fa fa-google-plus"></i></a>
+                            <a href="javascript:void(0);"><i class="fa fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section><!-- #team -->
+    <!--==========================
+      Contact Section
+    ============================-->
+    <section id="contact">
+        <div class="container wow fadeInUp">
+            <div class="section-header">
+                <h3 class="section-title">Contact</h3>
+                <p class="section-description">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque</p>
+            </div>
+        </div>
+
+        <!-- Uncomment below if you wan to use dynamic maps -->
+        <iframe src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;coord=31.5496,74.3807&amp;q=A108%20Saddar%2CLahore%20Pakistab+(Play%20Back)&amp;ie=UTF8&amp;t=&amp;z=14&amp;iwloc=B&amp;output=embed" width="100%" height="380" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+
+        <div class="container wow fadeInUp mt-5">
+            <div class="row justify-content-center">
+
+                <div class="col-lg-3 col-md-4">
+
+                    <div class="info">
+                        <div>
+                            <i class="fa fa-map-marker"></i>
+                            <p>A108 Saddar Street<br>Lahore, Pakistan</p>
+                        </div>
+
+                        <div>
+                            <i class="fa fa-envelope"></i>
+                            <p>info@medisafe.com</p>
+                        </div>
+
+                        <div>
+                            <i class="fa fa-phone"></i>
+                            <p>+92 300 5548855</p>
+                        </div>
+                    </div>
+
+                    <div class="social-links">
+                        <a href="javascript:vid(0);" class="twitter"><i class="fa fa-twitter"></i></a>
+                        <a href="javascript:vid(0);" class="facebook"><i class="fa fa-facebook"></i></a>
+                        <a href="javascript:vid(0);" class="instagram"><i class="fa fa-instagram"></i></a>
+                        <a href="javascript:vid(0);" class="google-plus"><i class="fa fa-google-plus"></i></a>
+                        <a href="javascript:vid(0);" class="linkedin"><i class="fa fa-linkedin"></i></a>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-5 col-md-8">
+                    <div class="form">
+                        <form action="" method="post" role="form" class="contactForm">
+                            <div class="form-group">
+                                <input type="text" name="Name" class="form-control" id="name" placeholder="Your Name" required="required" autocomplete="off" />
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" name="Email" id="email" placeholder="Your Email" required="required" autocomplete="off"/>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="Subject" id="subject" placeholder="Subject" required="required" autocomplete="off"/>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" name="Message" id="message" rows="5" data-rule="required" autocomplete="off" required="required" placeholder="Message"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <span id="msg"></span>
+                                <span id="error_message"></span>
+                            </div>
+                            <div class="text-center"><button type="button" onclick="ContactUs()">Send Message</button></div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section><!-- #contact -->
+
+</main>
+
+<!--==========================
+  Footer
+============================-->
+<footer id="footer">
+    <div class="footer-top">
+        <div class="container">
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="copyright">
+            &copy; Copyright <strong>Optimistic</strong>. All Rights Reserved
+        </div>
+    </div>
+</footer><!-- #footer -->
+
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+<script>
+    function ContactUs() {
+        debugger;
+        var name = $("#name").val();
+        var email = $("#email").val();
+        var subj = $("#subject").val();
+        var msg = $("#message").val();
+        if (name, email, subj, msg !== null || name, email, subj, msg != "") {
+            $.ajax('/Main/FeedBack', {
+                type: 'POST',
+                data: { Name: name, Email: email, Subject: subj, Message: msg },
+                success: function (data) {
+                    if (data === "submit") {
+                        $("#msg").html("Your message has been sent. Thank you!")
+                        $("#name").val('');
+                        $("#email").val('');
+                        $("#subject").val('');
+                        setTimeout(function () {
+                            location.reload();
+                        }, 3000);
+                    }
+                },
+                error: function () {
+                    alertR('Error');
+                }
+            });
+        }
+        else {
+            $("#error_message").html("Please fill the requirments");
+            setTimeout(function () {
+                location.reload();
+            }, 2000);
+        }
+
+    }
+</script>

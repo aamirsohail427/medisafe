@@ -1,0 +1,58 @@
+﻿@model List<EHealthCare.Models.RoomAllotment>
+@{
+    ViewBag.Title = "AllotedRoom";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-topline-theme">
+            <div class="card-head">
+                <header><i class="fa fa-bed"></i> Alloted Room</header>
+                <div class="tools">
+                    <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
+                </div>
+            </div>
+            <div class="card-body ">
+                <table class="table table-striped table-bordered table-hover table-checkable order-column valign-middle" id="example4">
+                    <thead>
+                        <tr>
+                            <th> Patient Name </th>
+                            <th> Room No </th>
+                            <th> Room Type </th>
+                            <th> Allotment Date </th>
+                            <th> Discharge Date </th>
+                            <th> Action </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (var item in Model)
+                            {
+                                <tr class="odd gradeX" id="#row_@item.RoomAllotmentID">
+                                    <td>@item.Patient</td>
+                                    <td>@item.Room</td>
+                                    <td class="center">@item.RoomID</td>
+                                    <td class="center">@string.Format("{0:dd/MM/yyyy}", item.Dated)</td>
+                                    <td class="center">@string.Format("{0:dd/MM/yyyy}", item.DischargeDate)</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-xs">
+                                            <i class="fa fa-pencil"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-xs" onclick="DeleteRoomById(@item.RoomAllotmentID)">
+                                            <i class="fa fa-trash-o "></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

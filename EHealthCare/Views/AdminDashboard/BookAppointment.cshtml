@@ -1,0 +1,86 @@
+﻿@model EHealthCare.Models.AdminViewModel
+@{
+    ViewBag.Title = "BookAppointment";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card card-topline-theme">
+            <div class="card-head">
+                <header><i class="fa fa-book"></i> Book Appointment</header>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("BookPatientAppointment", "AdminDashboard", FormMethod.Post))
+                {
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Patient Name</label><span class="required"> * </span>
+                                @Html.DropDownListFor(m => m.Appointment.PatientID, new SelectList(Model.PatientList, "PatientID","FirstName"),
+                                                       "Select Patient",new { @class= "form-control input-height"})
+                                @Html.ValidationMessageFor(x => x.Appointment.PatientID, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Assign Doctor</label><span class="required"> * </span>
+                                @Html.DropDownListFor(m => m.Appointment.DoctorID, new SelectList(Model.DoctorList, "DoctorID", "FirstName"),
+                                                     "Select Doctor",new { @class= "form-control input-height timepicker",autocomplete="off" })
+                                @Html.ValidationMessageFor(x => x.Appointment.DoctorID, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Appointment Date</label><span class="required"> * </span>
+                                @Html.TextBoxFor(a => a.AppointmentDate, "{0:dd/MM/yyyy}", new { @class = "form-control input-height datepicker", placeholder = "Appointment Date",autocomplete="off" })
+                                @Html.ValidationMessageFor(x => x.AppointmentDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Appointment Start Time</label><span class="required"> * </span>
+                                @Html.TextBoxFor(a => a.FromTime, "{0:hh:mm}", new { @class = "form-control input-height timepick", placeholder = "Appointment Start Time", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.FromTime, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Appointment End Time</label><span class="required"> * </span>
+                                @Html.TextBoxFor(a => a.ToTime, "{0:hh:mm}", new { @class = "form-control input-height timepick", placeholder = "Appointment End Time", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.ToTime, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-info">Save</button>
+                                <button type="button" class="btn btn-dark" onclick="reload()">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $(".datepicker").datepicker(
+            {
+                changeYear: true,
+                changeMonth: true,
+                dateFormat: 'MM/dd/yy',
+                minDate: 0
+            });
+    });
+    $(document).ready(function () {
+        $('.timepick').timepicki();
+    });
+    
+</script>

@@ -1,0 +1,88 @@
+﻿@model EHealthCare.Models.AddNewChatMessage
+<style>
+    .message-items {
+        display: none;
+        border: 1px solid grey;
+        width: 110px;
+        text-align: center;
+        float: right;
+        height: 27px;
+        border-radius: 10px;
+    }
+
+    .message-container:hover {
+        background-color: #f2f2f2;
+    }
+</style>
+<div>
+
+    <div class="message-container" onmouseover="ShowReact(@Model.Chat.ChatMessageId)" onmouseout="HideReact(@Model.Chat.ChatMessageId)">
+        <div name="message_4016952" class="message">
+            <div class="message-gutter">
+                <div class="avatar">
+                    <img alt="@Model.SenderName" class="img-circle bordered-grey" src="@Model.SenderPhoto" onerror="this.onerror=null;this.src='../Assets/img/avatar-image.png';">
+                </div>
+            </div>
+            <div class="message-content">
+                <div class="message-header">
+                    <div class="user-profile-menu dropdown btn-group">
+                        <a id="user-profile-menu" role="button" class="name dropdown-toggle" aria-haspopup="true" aria-expanded="false" href="#">@Model.SenderName</a>
+                        <div class="portal-dropdown-wrapper">
+                        </div>
+                    </div>
+                    <span class="time">@(Convert.ToDateTime(Model.Chat.CreatedDate).ToString("hh:mm tt"))</span>
+                </div>
+                <div class="message-content-wrapper">
+                    <div properties="[object Object]" class="message-body-wrapper">
+                        <div class="message-body">
+                            <div id="message-assets-@Model.Chat.ChatMessageId" class="message-items">
+                                <button class="title-dropdown-toggle dropdown-toggle btn btn-default pull-right cstm-btn" type="button" id="dropdownbtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-ellipsis-h"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownbtn">
+                                    <a class="dropdown-item update-react-@Model.Chat.ChatMessageId" >
+                                        <img src="~/Assets/Smiles/like.png" width="25" height="25" />
+                                        Like
+                                    </a>
+                                    <a class="dropdown-item update-react-@Model.Chat.ChatMessageId" messageid="@Model.Chat.ChatMessageId" >
+                                        <img src="~/Assets/Smiles/emoticons.png" width="25" height="25" />
+                                        Happy
+                                    </a>
+                                    <a class="dropdown-item update-react-@Model.Chat.ChatMessageId" messageid="@Model.Chat.ChatMessageId" >
+                                        <img src="~/Assets/Smiles/haha.png" width="25" height="25" />
+                                        Hahaha
+                                    </a>
+                                    <a class="dropdown-item update-react-@Model.Chat.ChatMessageId" >
+                                        <img src="~/Assets/Smiles/angry.png" width="25" height="25" />
+                                        Angry
+                                    </a>
+                                    @*<a class="dropdown-item" href="#" onclick="SetMessageReaction('@CommonHelper.FavouriteImage',@Model.Chat.ChatMessageId,@((int)ReactImages.Star))">
+                                            <img src="~/Assets/Smiles/star.png" width="25" height="25" />
+                                            Starred
+                                        </a>*@
+                                    @*<a class="dropdown-item" onclick="EditMessage(@Model.Chat.ChatMessageId)">
+                                            <img src="~/Assets/Smiles/edit.jpg" width="25" height="25" />
+                                            Edit
+                                        </a>*@
+                                </div>
+
+                                <div class="pull-right " onclick="EditMessage(@Model.Chat.ChatMessageId)">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true" style="margin-top:4px; margin-left:10px;"></i>
+                                </div>
+                                <div class="pull-right update-react-@Model.Chat.ChatMessageId" messageid="@Model.Chat.ChatMessageId">
+                                    <img src="~/Assets/Smiles/star.png" width="23" height="20" style="margin-top: -6px;" />
+                                </div>
+                            </div>
+
+                            <span msgsender="@Model.Chat.MessageBy" id="chatmsgtext-@Model.Chat.ChatMessageId">@Model.Chat.Message</span>
+                            <div class="message-reactions" id="reactdisplay-@Model.Chat.ChatMessageId">
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

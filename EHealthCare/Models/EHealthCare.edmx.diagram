@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ddcd51da02414f22bd32f2ee0646b7d3" Name="Diagram1">
+        <EntityTypeShape EntityType="EHealthCareModel.Appointment" Width="1.5" PointX="5.25" PointY="13.5" />
+        <EntityTypeShape EntityType="EHealthCareModel.AppointmentPayment" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EHealthCareModel.Chat" Width="1.5" PointX="0.75" PointY="1.375" />
+        <EntityTypeShape EntityType="EHealthCareModel.ChatMessage" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="EHealthCareModel.ChatUser" Width="1.5" PointX="5.75" PointY="3.75" />
+        <EntityTypeShape EntityType="EHealthCareModel.City" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EHealthCareModel.Contact" Width="1.5" PointX="7.75" PointY="3.75" />
+        <EntityTypeShape EntityType="EHealthCareModel.Doctor" Width="1.5" PointX="3" PointY="7.625" />
+        <EntityTypeShape EntityType="EHealthCareModel.LabTest" Width="1.5" PointX="5.25" PointY="17.75" />
+        <EntityTypeShape EntityType="EHealthCareModel.Medicine" Width="1.5" PointX="6" PointY="25.375" />
+        <EntityTypeShape EntityType="EHealthCareModel.Patient" Width="1.5" PointX="3" PointY="19.875" />
+        <EntityTypeShape EntityType="EHealthCareModel.Payment" Width="1.5" PointX="5.25" PointY="22" />
+        <EntityTypeShape EntityType="EHealthCareModel.Prescription" Width="1.5" PointX="8.25" PointY="18.5" />
+        <EntityTypeShape EntityType="EHealthCareModel.RoomAllotment" Width="1.5" PointX="8.25" PointY="22.875" />
+        <EntityTypeShape EntityType="EHealthCareModel.Room" Width="1.5" PointX="6" PointY="28.25" />
+        <EntityTypeShape EntityType="EHealthCareModel.Staff" Width="1.5" PointX="5.75" PointY="7.75" />
+        <EntityTypeShape EntityType="EHealthCareModel.User" Width="1.5" PointX="0.75" PointY="14.125" />
+        <EntityTypeShape EntityType="EHealthCareModel.UserProfile" Width="1.5" PointX="3" PointY="27.25" />
+        <AssociationConnector Association="EHealthCareModel.FK_Appointment_Doctor" />
+        <AssociationConnector Association="EHealthCareModel.FK_Appointment_Patient" />
+        <AssociationConnector Association="EHealthCareModel.FK_Appointment_User" />
+        <AssociationConnector Association="EHealthCareModel.FK_ChatMessage_Chat" />
+        <AssociationConnector Association="EHealthCareModel.FK_Doctor_User" />
+        <AssociationConnector Association="EHealthCareModel.FK_LabTests_Patient" />
+        <AssociationConnector Association="EHealthCareModel.FK_LabTests_User" />
+        <AssociationConnector Association="EHealthCareModel.FK_Prescription_Medicine" />
+        <AssociationConnector Association="EHealthCareModel.FK_Patient_User" />
+        <AssociationConnector Association="EHealthCareModel.FK_Payment_Patient" />
+        <AssociationConnector Association="EHealthCareModel.FK_Prescription_Patient" />
+        <AssociationConnector Association="EHealthCareModel.FK_RoomAllotment_Patient" />
+        <AssociationConnector Association="EHealthCareModel.FK_Prescription_User" />
+        <AssociationConnector Association="EHealthCareModel.FK_RoomAllotment_Rooms" />
+        <AssociationConnector Association="EHealthCareModel.FK_UserProfile_User" />
+        <AssociationConnector Association="EHealthCareModel.FK_UserProfile_UserProfile" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

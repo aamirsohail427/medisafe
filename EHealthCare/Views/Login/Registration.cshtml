@@ -1,0 +1,113 @@
+﻿@model EHealthCare.Models.PatientViewModel
+@{
+    ViewBag.Title = "Registration";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<!--Jquery-->
+<script src="~/WebAssets/js/jquery.min.js" type="text/javascript"></script>
+<style>
+    .text-danger {
+        color: #f44336;
+        font-size: 15px;
+    }
+
+    .text-error {
+        color: #f44336;
+        font-size: 15px;
+    }
+
+    #msg {
+        color: #f44336;
+        font-size: 15px;
+    }
+    .newaccount {
+        font-size: 15px;
+        font-weight: 400;
+        color: #999;
+    }
+    .regist {
+        text-decoration: none;
+        color: #94af65;
+        font-weight: bold;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        window.setTimeout(function () {
+            $(".text-error").show(function () {
+                $(this).remove();
+            });
+        }, 2000);
+    });
+
+</script>
+
+@using (Html.BeginForm("UserRegistration", "Login", FormMethod.Post, new { @id = "SignUpForm" }))
+{
+    @Html.HiddenFor(m => m.User.UserID)
+    @Html.HiddenFor(m => m.User.UserType, new { @id = "typeid" })
+    @Html.HiddenFor(m => m.UserProfile.UserProfileId)
+
+    <h2>Sign Up Your Account</h2>
+
+    <p>
+        <label for="Email" class="floatLabel">First Name</label>
+        @Html.TextBoxFor(x => x.UserProfile.FirstName, new { autocomplete = "off", placeholder = "First Name" })
+        @Html.ValidationMessageFor(x => x.UserProfile.FirstName, "", new { @class = "text-danger" })
+    </p>
+    <p>
+        <label for="Email" class="floatLabel">Last Name</label>
+        @Html.TextBoxFor(x => x.UserProfile.LastName, new { autocomplete = "off", placeholder = "Last Name" })
+        @Html.ValidationMessageFor(x => x.UserProfile.LastName, "", new { @class = "text-danger" })
+    </p>
+    <p>
+        <label for="Email" class="floatLabel">User Name</label>
+        @Html.TextBoxFor(x => x.User.UserName, new { autocomplete = "off", placeholder = "User Name" })
+        @Html.ValidationMessageFor(x => x.User.UserName, "", new { @class = "text-danger" })
+        <span class="text-error" id="exist"></span>
+    </p>
+    <p>
+        <label for="Email" class="floatLabel">Email</label>
+        @Html.TextBoxFor(x => x.UserProfile.Email, new { autocomplete = "off", placeholder = "Email" })
+        @Html.ValidationMessageFor(x => x.UserProfile.Email, "", new { @class = "text-danger" })
+    </p>
+    <p>
+        <label for="password" class="floatLabel">Password</label>
+        @Html.TextBoxFor(x => x.User.Password, new { type = "password", placeholder = "Password" })
+        @Html.ValidationMessageFor(x => x.User.Password, "", new { @class = "text-danger" })
+    </p>
+    <p>
+        <label for="confirm_password" class="floatLabel">Confirm Password</label>
+        @Html.TextBoxFor(x => x.ConfirmPassword, new { type = "password", placeholder = "Confirm Password" })
+        <span id="msg"></span>
+    </p>
+    <p>
+        <input type="submit" value="Create My Account" id="submit">
+    </p>
+    <p class="newaccount">If you have an already Account <a class="regist" href="@Url.Action("Login","Login")">Sign In</a></p>
+}
+
+<script>
+    $("#typeid").val(2);
+    $('#ConfirmPassword').on('keyup', function () {
+        debugger;
+        var password = $("#User_Password").val();
+        var CPassword = $("#ConfirmPassword").val();
+        var message = $("#msg");
+        if (password != CPassword) {
+            $(message).html("Password does not match.");
+            $("#submit").prop('disabled', true);
+        }
+        else {
+            $("#submit").prop('disabled', false);
+            $(message).html("");
+
+        }
+    });
+    debugger;
+    var msg = '@TempData["exist"]';
+    if (msg != "") {
+        $("#exist").html("User Name already exist");
+    }
+</script>

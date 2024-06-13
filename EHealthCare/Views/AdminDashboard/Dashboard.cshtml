@@ -1,0 +1,319 @@
+﻿@model EHealthCare.Models.AdminViewModel
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@{
+
+    int userType = Convert.ToInt32(Session["UserType"]);
+
+    int Sr = 1;
+}
+<!-- start widget -->
+
+<style>
+    .bg-org {
+        background-color: #b09782 !important
+    }
+
+    .bg-gray {
+        background-color: #799188 !important
+    }
+
+    .bg-light-dark {
+        background-color: #3b4851;
+    }
+
+    .bg-light-orange {
+        background-color: #dfa042;
+    }
+</style>
+<div class="state-overview">
+    <div class="row">
+        @if (userType == 1)
+        {
+            <div class="col-xl-3 col-md-3 col-12">
+                <div class="info-box bg-purple">
+                    <span class="info-box-icon push-bottom"><i class="material-icons">group</i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text bold uppercase">Total Users</span>
+                        <span class="info-box-number  bold" data-counter="counterup" data-value="@Model.UserCount">0</span>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-3 col-12">
+                <div class="info-box bg-orange">
+                    <span class="info-box-icon push-bottom"><i class="material-icons">group</i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text bold uppercase">Doctors</span>
+                        <span class="info-box-number bold" data-counter="counterup" data-value="@Model.DoctorCount">0</span>
+
+                    </div>
+                </div>
+                <!-- /.info-box -->
+            </div>
+
+            <div class="col-xl-3 col-md-3 col-12">
+                <div class="info-box bg-blue">
+                    <span class="info-box-icon push-bottom"><i class="material-icons">group</i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text bold uppercase">Staff</span>
+                        <span class="info-box-number bold" data-counter="counterup" data-value="@Model.StaffCount">0</span>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-3 col-12">
+                <div class="info-box bg-success">
+                    <span class="info-box-icon push-bottom"><i class="material-icons">group</i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text bold uppercase">Hospital Earning</span>
+                        <span class="info-box-number bold" data-counter="counterup" data-value="500"></span> <span>$</span>
+
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+
+    <div class="row">
+        @if (userType == 3 || userType == 1)
+        {
+            <div class="col-xl-3 col-md-3 col-12">
+                <div class="info-box bg-gray">
+                    <span class="info-box-icon push-bottom"><i class="material-icons">group</i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text bold uppercase">Total Patients</span>
+                        <span class="info-box-number bold" data-counter="counterup" data-value="@Model.PatientCount"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- /.col -->
+            <div class="col-xl-3 col-md-3 col-12">
+                <div class="info-box bg-light-orange">
+                    <span class="info-box-icon push-bottom"><i class="material-icons">group</i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text bold uppercase">Patient Prescription</span>
+                        <span class="info-box-number bold" data-counter="counterup" data-value="@Model.PrescriptionCount">0</span>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-3 col-12">
+                <div class="info-box bg-light-dark">
+                    <span class="info-box-icon push-bottom"><i class="material-icons">group</i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text bold uppercase">Alloted Rooms</span>
+                        <span class="info-box-number bold" data-counter="counterup" data-value="@Model.TotalRoomCount">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-3 col-12">
+                <div class="info-box bg-org">
+                    <span class="info-box-icon push-bottom"><i class="material-icons">group</i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text bold uppercase">Appointments</span>
+                        <span class="info-box-number bold" data-counter="counterup" data-value="@Model.AppointmentCount">0</span>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+<!-- end widget -->
+<!-- chart start -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-box card-topline-theme">
+            <div class="card-head">
+                <header><i class="fa fa-server"></i> Patient Appointments</header>
+                <div class="tools">
+                    <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
+                </div>
+            </div>
+            <div class="card-body no-padding height-9">
+                <div class="row">
+                    <canvas id="chartjs_line2"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- Chart end -->
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card  card-topline-theme">
+            <div class="card-head">
+                <header><i class="fa fa-bookmark"></i> BOOKED APPOINTMENT</header>
+                <div class="tools">
+                    <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
+                </div>
+            </div>
+            <div class="card-body ">
+                <div class="row table-padding">
+
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover table-checkable order-column" id="example4">
+                                <thead>
+                                    <tr>
+                                        <th class="center">Sr No</th>
+                                        <th class="center">Patient Name</th>
+                                        <th class="center">Assigned Doctor</th>
+                                        <th  class="center">Appointment Date</th>
+                                        <th class="center">Start Time</th>
+                                        <th class="center">End Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.AppointmentsList)
+                                    {
+                                        <tr class="odd gradeX">
+                                            <td class="center">@Sr</td>
+                                            <td class="center">@item.Patient.FirstName</td>
+                                            <td class="center">@item.Doctor.FirstName</td>
+                                            <td class="center">@string.Format("{0:dd/MM/yyyy}", item.AppointmentDate)</td>
+                                            <td class="center">@string.Format("{0:hh:mm}", item.ToTime)</td>
+                                            <td class="center">@string.Format("{0:hh:mm}", item.FromTime)</td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<script>
+    var month = [];
+    var patientData = [];
+    $(document).ready(function () {
+        var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var config = {
+            type: 'line',
+            data: {
+                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                datasets: [{
+                    label: "Upcoming Appointment",
+                    backgroundColor: window.chartColors.red,
+                    borderColor: window.chartColors.red,
+                    data: [
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                    ],
+                    fill: false,
+                }]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Appointments'
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Month'
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Appointments'
+                        }
+                    }]
+                }
+            }
+        };
+        var ctx = document.getElementById("chartjs_line2").getContext("2d");
+        window.myLine = new Chart(ctx, config);
+    });
+
+    $(document).ready(function () {
+
+        $.ajax({
+            type: "POST",
+            url: "/Doctor/PatientGraph",
+            contentType: "application/json; charset=utf-8",
+            async: false,
+            dataType: "json",
+            success: function (response) {
+                debugger;
+                month = response.months;
+                patientData = response.patientcount;
+            }
+        });
+
+        debugger
+
+        var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var color = Chart.helpers.color;
+        var barChartData = {
+
+            labels: month,
+            datasets: [{
+                label: 'Total Month Wise Patients',
+                backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+                borderColor: window.chartColors.red,
+                borderWidth: 1,
+                data: patientData
+            }]
+
+        };
+
+        var ctx = document.getElementById("patient-graph").getContext("2d");
+        window.myBar = new Chart(ctx, {
+            type: 'bar',
+            data: barChartData,
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Patient Statistics'
+                }
+            }
+        });
+
+    });
+</script>
+

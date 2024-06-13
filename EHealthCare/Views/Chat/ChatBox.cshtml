@@ -1,0 +1,353 @@
+﻿@model EHealthCare.Models.ChatViewModel
+@{
+    ViewBag.Title = "ChatBox";
+    Layout = "~/Views/Shared/" + Model.Layout;
+}
+<link href="https://fonts.googleapis.com/css?family=Dosis:400,500,600,700,800" rel="stylesheet">
+@section SpecificScripts
+{
+    <script>
+        $("#msgsnd").keyup(function (e) {
+            debugger
+
+            if (e.which == 13) {
+                debugger
+
+                var message = $("#msgsnd").val();
+                if (message != "") {
+                    $("#msgsnd").val("");
+                    var RecieverID = [parseInt($("#recieverid").val())];
+                    var SenderName = $("#sendername").val();
+                    var SenderID = parseInt($("#senderid").val());
+                    var SenderPhoto = $("#senderphoto").val();
+                    var Chatid = $("#chatid").val();
+
+                    $.ajax
+                        ({
+                            type: "GET",
+                            coentType: "application/json",
+                            dataType: "json",
+                            //data: json1,
+                            url: "/Chat/AddChatMessages?Message=" + message + "&SenderName=" + SenderName + "&SenderPhoto=" + SenderPhoto + "&ChatID=" + Chatid + "&receiverID=" + RecieverID + "",
+                            success: function (response) {
+                                debugger
+
+                                //var chat = result.addchat;
+                                sendMessage(RecieverID, message, '', SenderName, SenderID, Chatid, SenderPhoto, response.chatmessageid);
+
+
+                                $("#newmsget").append(response.message);
+
+                            },
+                            error: function (status, ex) {
+
+
+                            }
+                        });
+
+                }
+            }
+
+        });
+    </script>
+}
+<style>
+
+    .show-col {
+        display: block
+    }
+
+    .hide-col {
+        display: none
+    }
+
+    .searchbox {
+        width: 100%;
+    }
+
+    .cstm-btn {
+        color: #036;
+        font-size: 21px;
+        background: transparent !important;
+        border: 0;
+        box-shadow: none;
+        padding: 0px 10px;
+    }
+
+        .cstm-btn:hover {
+            color: #036;
+            font-size: 21px;
+            background: transparent !important;
+            border: 0;
+            box-shadow: none;
+            padding: 0px 10px;
+        }
+
+        .cstm-btn:visited {
+            color: #036;
+            font-size: 21px;
+            background: transparent !important;
+            border: 0;
+            box-shadow: none;
+            padding: 0px 10px;
+        }
+
+        .cstm-btn:focus {
+            color: #036;
+            font-size: 21px;
+            background: transparent !important;
+            border: 0;
+            box-shadow: none;
+            padding: 0px 10px;
+        }
+
+    .dropdown-menu {
+        min-width: 120px;
+    }
+
+    .dropdown-item {
+        padding: 0.25rem 0.5rem;
+    }
+
+    #chat::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        border-radius: 10px;
+        background-color: #f6f6f6;
+    }
+
+    #chat::-webkit-scrollbar {
+        width: 12px;
+        background-color: #f6f6f6;
+    }
+
+    #chat::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        background-color: #BEBFC3;
+    }
+
+    .search-area {
+        max-height: 350px;
+        height: 100%;
+        overflow-y: auto;
+    }
+
+    #searchChat::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        border-radius: 10px;
+        background-color: #f6f6f6;
+    }
+
+    #searchChat::-webkit-scrollbar {
+        width: 12px;
+        background-color: #f6f6f6;
+    }
+
+    #searchChat::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        background-color: #BEBFC3;
+    }
+
+    .role-name {
+        color: #1d1c1d !important;
+        font-weight: bold;
+        word-break: break-word;
+        text-decoration:none!important;
+        font-size:16px;
+    }
+
+        .role-name:hover {
+            color: #1d1c1d !important;
+            text-decoration: underline;
+            font-weight: bold
+        }
+
+    .white-box {
+        padding: 0px !important
+    }
+
+    .message-items {
+        display: none;
+        border: 1px solid grey;
+        width: 110px;
+        text-align: center;
+        float: right;
+        height: 27px;
+        border-radius: 10px;
+        margin-top: -15px;
+    }
+
+    .message-container .message .message-content:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        top: 10px;
+        left: 65px;
+        width: 0;
+        height: 0;
+        border: 20px solid transparent;
+        border-top-color: #efefef;
+        border-bottom: 0;
+        border-left: 0;
+        margin-left: -3px;
+        margin-bottom: -20px;
+        transform: rotate(-45deg);
+    }
+
+    .message .message-content {
+        flex: 1;
+        font-size: 16px;
+        min-width: 0;
+        background-color: #efefef;
+        padding: 10px;
+        border-radius: 4px;
+    }
+    /*.message .message-content:hover {
+        background-color: #f6f6f6;
+        transition: ease-in 0.5s;
+        -webkit-transition: ease-in 0.5s;
+        -moz-transition: ease-in 0.5s;
+        -o-transition: ease-in 0.5s;
+    }*/
+</style>
+<link href="~/WebAssets/css/ChatBox.css" rel="stylesheet" />
+<div class="row">
+    <input type="hidden" id="recieverid" value="@Model.ReceiverID" />
+    <input type="hidden" id="senderid" value="@Model.SenderID" />
+    <input type="hidden" id="sendername" value="@Model.SenderName" />
+    <input type="hidden" id="senderphoto" value="@Model.UserPhoto" />
+    <input type="hidden" id="chatid" value="@Model.ChatID" />
+    <div class="col-md-12">
+        <div class="white-box">
+            <div class="chat-wrapper">
+                <div id="main">
+                    <div class="flex-header main-header">
+                        <div class="header-content">
+                            <div class="dropdown btn-group">
+                                <div class="dropdown">
+                                    <button class="title-dropdown-toggle dropdown-toggle btn btn-default" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <h4><span><i class="fa fa-comments"></i> @Model.SenderName</span></h4>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="header-nav">
+
+                            <a role="link" class="btn btn-default" data-toggle="modal" data-target="#searchModal"><i class="fa fa-search search-input-icon"></i></a>
+                            <div class="dropdown btn-group">
+                                <button class="title-dropdown-toggle dropdown-toggle btn btn-default" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-ellipsis-v"></i>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="general-room">
+                        <div class="show-col">
+                            <div class="flex-content" style="max-height:400px;height:100%;min-height:400px;overflow:auto">
+                                <div id="chat-container" class="loaded">
+                                    <div class="container-bars">
+                                        <div class="progress-bars">
+                                        </div>
+                                    </div>
+                                    <div id="chat" class="scrollbar">
+                                        <div class="single-chat" id="newmsget">
+                                            @foreach (var item in Model.AllMessages)
+                                            {
+                                                <div>
+                                                    <div class="message-container">
+                                                        <div name="message_4016952" class="message">
+                                                            <div class="message-gutter">
+                                                                <div class="avatar">
+                                                                    <img alt="Test Nurse" class="img-circle bordered-grey mt-2" src="@item.UserPhoto" onerror="this.onerror=null;this.src='../WebAssets/img/avatar-image_20190607082152.png';">
+                                                                </div>
+                                                            </div>
+                                                            <div class="message-content">
+                                                                <div class="message-header">
+                                                                    <div class="user-profile-menu dropdown btn-group">
+                                                                        <a id="user-profile-menu" role="button" class="role-name" aria-haspopup="true" aria-expanded="false" href="javascript:void(0);" style="font-family:Dosis,sans-serif">@item.FullName</a>
+                                                                        <div class="portal-dropdown-wrapper">
+                                                                        </div>
+                                                                    </div>
+                                                                    <span class="time">@item.CreatedDate</span>
+                                                                </div>
+                                                                <div class="message-content-wrapper">
+                                                                    <div properties="[object Object]" class="message-body-wrapper">
+                                                                        <div class="message-body">
+                                                                            <span msgsender="60" id="chatmsgtext-1149">@item.Message</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-footer">
+                                <div class="message-form">
+                                    <div class="message-input-wrapper">
+                                        <textarea class="form-control message-text input-height" placeholder="Message" id="msgsnd"></textarea>
+                                    </div>
+                                    <div class="users-typing">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<!--Modal-->
+<!--Modal-->
+<div class="modal fade" id="searchModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h4 class="modal-title uppercase" id="">Search Messages</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="text" class="form-control input-height" placeholder="Search..." />
+                    </div>
+                    <div class="col-md-12">
+                        <div class="search-area" id="searchChat">
+                            <div id="appendmsgssearch">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(".message-content").hover(function () {
+        $(".message-items").css("display", "block");
+    });
+</script>
+

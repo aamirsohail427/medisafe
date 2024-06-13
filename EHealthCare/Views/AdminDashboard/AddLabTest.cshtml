@@ -1,0 +1,116 @@
+﻿@model EHealthCare.Models.AdminViewModel
+@{
+    ViewBag.Title = "AddLabTest";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-topline-theme">
+            <div class="card-head">
+                <header><i class="fa fa-plus-circle"></i> Add Lab Test</header>
+                <div class="tools">
+                    <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
+                </div>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("AddorEditLabTest", "AdminDashboard", FormMethod.Post, new { id = "Testform", enctype = "multipart/form-data" }))
+                {
+                    <div class="row">
+                        @Html.HiddenFor(x => x.LabTest.LabTestID)
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Patient Name</label><span class="required"> * </span>
+                                @Html.DropDownListFor(m => m.LabTest.PatientID, new SelectList(Model.PatientList,"PatientID","FirstName"),
+                                                    "Select Patient",new { @class= "form-control input-height",autocomplete="off" })
+                                @Html.ValidationMessageFor(x => x.LabTest.PatientID, "", new { @class = "text=danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Test Name</label><span class="required"> * </span>
+                                @Html.DropDownListFor(x => x.LabTest.TestName, new List<SelectListItem>
+                                 {
+                                       new SelectListItem{ Text="Blood Test", Value = "Blood Test" },
+                                      new SelectListItem{ Text="Urine Test", Value = "Urine Test" }
+                                   }, "Select Test", new { @class = "form-control input-height", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.LabTest.TestName, "", new { @class = "text=danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Test Date</label>
+                                @Html.TextBoxFor(x => x.LabTest.TestDate, new { @class = "form-control input-height datepicker", placeholder = "Test Date", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.LabTest.TestDate, "", new { @class = "text=danger" })
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    Report
+                                </label>
+                                @Html.TextBoxFor(x => x.LabTest.Report, new { @class = "form-control input-height", type = "file", multipart = "multipart", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.LabTest.Report, "", new { @class = "text=danger" })
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Status</label>
+                                @Html.DropDownListFor(x => x.LabTest.Status, new List<SelectListItem>
+                              {
+                                   new SelectListItem{ Text="Pending", Value = "Pending" },
+                                  new SelectListItem{ Text="Approved", Value = "Pending" }
+                               },"Select Status", new { @class = "form-control input-height", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.LabTest.Status, "", new { @class = "text=danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    Doctor Remarks
+                                </label>
+                                @Html.TextAreaFor(x => x.LabTest.Remarks, new { @class = "form-control input-height", placeholder = "Doctor Remarks", rows = "4", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.LabTest.Remarks, "", new { @class = "text=danger" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="footer">
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-dark" onclick="reload()">Cancel</button>
+                                    <button type="submit" class="btn btn-info">Save</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $(".datepicker").datepicker(
+            {
+                changeYear: true,
+                changeMonth: true,
+                dateFormat: 'dd/mm/yy',
+                maxDate: new Date,
+                minDate: new Date(1900, 6, 12)
+            });
+    });
+</script>

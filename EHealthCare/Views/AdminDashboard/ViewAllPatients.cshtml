@@ -1,0 +1,274 @@
+﻿@model EHealthCare.Models.AdminViewModel
+@{
+    ViewBag.Title = "ViewAllPatients";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    .select2-container {
+        width: 411.5px !important;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-topline-theme">
+            <div class="card-head">
+                <header> All Patients</header>
+                <div class="tools">
+                    <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
+                </div>
+            </div>
+            <div class="card-body ">
+                <div class="row">
+
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <table class="table table-striped table-bordered table-hover table-checkable order-column valign-middle" id="example4">
+                            <thead>
+                                <tr>
+                                    <th>Photo</th>
+                                    <th> Name </th>
+                                    <th> Gender </th>
+                                    <th> Mobile </th>
+                                    <th> Email </th>
+                                    <th> DOB </th>
+                                    <th>Age</th>
+                                    <th>Blood Group</th>
+                                    <th> Action </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    foreach (var item in Model.PatientList)
+                                    {
+                                <tr class="odd gradeX">
+                                    <td class="patient-img">
+                                        <img src="@item.Image" class="img-circle" alt="" onerror="this.onerror=null;this.src='../WebAssets/img/avatar-image.png';">
+                                    </td>
+                                    <td>@item.FirstName @item.LastName</td>
+                                    <td class="center">@item.Gender</td>
+                                    <td>
+                                        @item.Phone
+                                    </td>
+                                    <td>
+                                        @item.Email
+                                    </td>
+                                    <td class="center">@string.Format("{0:dd/MM/yyyy}", item.DOB)</td>
+                                    <td class="center">@item.Age</td>
+                                    <td class="center">@item.BloodGroup</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-xs" onclick="EditPatientById(@item.PatientID)">
+                                            <i class="fa fa-pencil"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-xs" onclick="DeletePatientById(@item.PatientID)">
+                                            <i class="fa fa-trash-o "></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="patientModel" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Update Patient</h4>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("AddorEditPatient", "AdminDashboard", FormMethod.Post, new { id = "prescriptionform", enctype = "multipart/form-data" }))
+                {
+                    @Html.HiddenFor(x => x.Patient.PatientID)
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>First Name</label><span class="required"> * </span>
+                                @Html.TextBoxFor(x => x.Patient.FirstName, new { @class = "form-control input-height", placeholder = "Enter First Name", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.Patient.FirstName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Last Name</label><span class="required"> * </span>
+                                @Html.TextBoxFor(x => x.Patient.LastName, new { @class = "form-control input-height", placeholder = "Enter Last Name", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.Patient.LastName, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>DOB</label><span class="required"> * </span>
+                                @Html.TextBoxFor(x => x.Patient.DOB, new { @class = "form-control input-height datepicker", placeholder = "DOB", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.Patient.DOB, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Age</label><span class="required"> * </span>
+                                @Html.TextBoxFor(x => x.Patient.Age, new { @class = "form-control input-height", placeholder = "Age", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.Patient.Age, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Mobile Number</label><span class="required"> * </span>
+                                @Html.TextBoxFor(x => x.Patient.Phone, new { @class = "form-control input-height phonemask", placeholder = "Phone Number", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.Patient.Phone, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Email</label><span class="required"> * </span>
+                                @Html.TextBoxFor(x => x.Patient.Email, new { @class = "form-control input-height", placeholder = "Email", type = "email", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.Patient.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Gender</label><span class="required"> * </span>
+                                @Html.DropDownListFor(x => x.Patient.Gender, new List<SelectListItem>
+                                {
+                                       new SelectListItem{ Text="Male", Value = "Male" },
+                                      new SelectListItem{ Text="Female", Value = "Female" }
+                                   }, "Select Gender", new { @class = "form-control input-height", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.Patient.Gender, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Marital Status</label><span class="required"> * </span>
+                                @Html.DropDownListFor(x => x.Patient.MariedStatus, new List<SelectListItem>
+                                         {
+                                              new SelectListItem{ Text="Married", Value = "Married" },
+                                             new SelectListItem{ Text="UnMarried", Value = "UnMarried" }
+                                          }, "Select Status", new { @class = "form-control input-height", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.Patient.MariedStatus, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Blood Pressure Status</label><span class="required"> * </span>
+                                @Html.DropDownListFor(x => x.Patient.BloodPressureStatus, new List<SelectListItem>
+
+                                        {
+                                       new SelectListItem{ Text="Select Status", Value = "" },
+                                             new SelectListItem{ Text="Low", Value = "Low" },
+                                            new SelectListItem{ Text="Normal", Value = "Normal" },
+                                            new SelectListItem{ Text="High", Value = "High" },
+                                         }, "Select Status", new { @class = "form-control input-height", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.Patient.BloodPressureStatus, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Blood Group</label><span class="required"> * </span>
+                                @Html.TextBoxFor(x => x.Patient.BloodGroup, new { @class = "form-control input-height", placeholder = "Blood Group", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.Patient.BloodGroup, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Condtion/Injury</label><span class="required"> * </span>
+                                @Html.TextBoxFor(x => x.Patient.Condtion, new { @class = "form-control input-height", placeholder = "Condtion/Injury", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.Patient.Condtion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Consulting Room No</label><span class="required"> * </span>
+                                @Html.TextBoxFor(x => x.Patient.ConsultingRoom, new { @class = "form-control input-height", placeholder = "Consulting Room No", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.Patient.ConsultingRoom, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Assign Doctor</label><span class="required"> * </span>
+                                @Html.DropDownListFor(m => m.Patient.AssignedDoc, new SelectList(Model.DoctorList,"DoctorID","FirstName"),
+                                          "Select Doctor",new { @class= "form-control input-height" })
+                                @Html.ValidationMessageFor(x => x.Patient.AssignedDoc, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @*<div class="col-md-6">
+                            <div class="form-group">
+                                <label>Status</label><span class="required"> * </span>
+                                @Html.TextBoxFor(x => x.Patient.Status, new { @class = "form-control input-height", placeholder = "Status", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.Patient.Status, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Joining Date</label><span class="required"> * </span>
+                                @Html.TextBoxFor(x => x.Patient.JoinDate, new { @class = "form-control input-height", placeholder = "Join Date", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.Patient.JoinDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>City</label><span class="required"> * </span>
+                                @Html.DropDownListFor(m => m.Patient.City, new SelectList(Model.CityList,"CityId","CityName"),
+                                          "Select City",new { @class= "form-control input-height" })
+                                @Html.ValidationMessageFor(x => x.Patient.City, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Upload Photo</label><span class="required"> * </span>
+                                @Html.TextBoxFor(x => x.Patient.Image, new { @class = "form-control input-height", type = "file", accept = "image/*" })
+                                @Html.ValidationMessageFor(x => x.Patient.Image, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Address</label><span class="required"> * </span>
+                                @Html.TextAreaFor(x => x.Patient.Address, new { @class = "form-control input-height", placeholder = "Enter Address", rows = "3", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.Patient.Address, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-info">Save</button>
+                                <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $(".phonemask").mask("9999 9999999");
+    $(function () {
+        $(".datepicker").datepicker(
+            {
+                changeYear: true,
+                changeMonth: true,
+                dateFormat: 'dd/mm/yy',
+                maxDate: new Date,
+                minDate: new Date(1900, 6, 12)
+            });
+    });
+  
+</script>

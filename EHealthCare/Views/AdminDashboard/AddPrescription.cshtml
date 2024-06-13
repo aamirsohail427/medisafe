@@ -1,0 +1,147 @@
+﻿@model EHealthCare.Models.AdminViewModel
+@{
+    ViewBag.Title = "AddPrescription";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-topline-theme">
+            <div class="card-head">
+                <header><i class="fa fa-plus-circle"></i> Add Prescription</header>
+                <div class="tools">
+                    <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
+                </div>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("AddorEditPrescription", "AdminDashboard", FormMethod.Post, new { id = "prescriptionform" , enctype = "multipart/form-data" }))
+                {
+                <div class="row">
+                    @Html.HiddenFor(m => m.Prescription.PatientPrescriptionID)
+                    @Html.HiddenFor(m => m.Prescription.PatientID)
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Patient Name</label><span class="required"> * </span>
+                            @Html.DropDownListFor(m => m.Prescription.PatientID, new SelectList(Model.PatientList,"PatientID","FirstName"),
+                                                "Select Patient",new { @class= "form-control input-height",autocomplete="off" })
+                            @Html.ValidationMessageFor(x => x.Prescription.PatientID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Medication Name</label><span class="required"> * </span>
+                            @Html.DropDownListFor(m => m.Prescription.MedicineID, new SelectList(Model.MedicineList,"MedicineID","Name"),
+                                                            "Select Medicine",new { @class= "form-control input-height",autocomplete="off" })
+                            @Html.ValidationMessageFor(x => x.Prescription.MedicineID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Reason</label>
+                                @Html.TextBoxFor(x => x.Prescription.Reason, new { @class = "form-control input-height", placeholder = "Reason", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.Prescription.Reason, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    Dose
+                                </label>
+                                @Html.TextBoxFor(x => x.Prescription.Dose, new { @class = "form-control input-height", placeholder = "Dose", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.Prescription.Dose, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Unit</label>
+                                @Html.DropDownListFor(x => x.Prescription.Unit, new List<SelectListItem>
+                              {
+                                   new SelectListItem{ Text="mg", Value = "mg" },
+                                  new SelectListItem{ Text="ml", Value = "ml" }
+                               },"Select Unit", new { @class = "form-control input-height", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.Prescription.Unit, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Start Date</label>
+                                <span class="required" aria-required="true"> * </span>
+                                @Html.TextBoxFor(Model => Model.Prescription.StartDate,"{0:dd/MM/yyyy}", new { @class = "form-control input-height", placeholder = "Start Date", autocomplete = "off", id = "startDate" })
+                                @Html.ValidationMessageFor(x => x.Prescription.StartDate, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    End Date
+                                </label>
+                                @Html.TextBoxFor(x => x.Prescription.EndDate, "{0:dd/MM/yyyy}", new { @class = "form-control input-height", placeholder = "End Date", autocomplete = "off", id = "endDate" })
+                                @Html.ValidationMessageFor(x => x.Prescription.EndDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    Comments
+                                </label>
+                                @Html.TextAreaFor(x => x.Prescription.Comments, new { @class = "form-control input-height", placeholder = "Comments", rows = "4", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.Prescription.Comments, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="footer">
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-dark" onclick="reload()">Cancel</button>
+                                    <button type="submit" class="btn btn-info">Save</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("[id*=startDate]").datepicker(
+            {
+                changeYear: true,
+                changeMonth: true,
+                dateFormat: 'MM/dd/yy',
+                minDate: new Date(),
+                onSelect: function (selected) {
+                    var dt = new Date(selected);
+                    dt.setDate(dt.getDate());
+                    $("[id*=endDate]").datepicker("option", "minDate", dt);
+                }
+            });
+        $("[id*=endDate]").datepicker(
+            {
+                changeYear: true,
+                changeMonth: true,
+                dateFormat: 'MM/dd/yy',
+                onSelect: function (selected) {
+                    var dt = new Date(selected);
+                    dt.setDate(dt.getDate() - 1);
+                    $("[id*=startDate]").datepicker("option", "maxDate", dt);
+                }
+            });
+    });
+
+</script>

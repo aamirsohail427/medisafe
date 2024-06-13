@@ -1,0 +1,94 @@
+﻿@model List<EHealthCare.Models.Doctor>
+
+<style>
+    .team-list {
+        overflow-y: auto;
+        max-height: 300px;
+    }
+
+    .team-member:first-of-type {
+        margin-top: 0;
+    }
+
+    .team-member {
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 700;
+        border: 1px solid transparent;
+        border-top-color: #e4e4e4;
+        padding: 12px 15px;
+        margin-top: -1px;
+    }
+
+        .team-member:hover {
+            background: #edf7fd;
+            border-color: #d3ecfa;
+            border-radius: 3px;
+            position: relative;
+        }
+
+    .team-member {
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 700;
+        border: 1px solid transparent;
+        border-top-color: #e4e4e4;
+        padding: 8px 6px;
+        margin-top: -1px;
+    }
+
+        .team-member > .avatar {
+            display: inline-block;
+            margin-right: 5px;
+            position: relative;
+            top: -1px;
+        }
+</style>
+
+<div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content ">
+        <div class="modal-header ">
+            <h4 class="modal-title">Direct Messages</h4>
+        </div>
+        <div class="modal-body">
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Search</label>
+                            <input type="text" class="form-control user-keyword input-height" placeholder="Search">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <p>Select members to start conversation with.</p>
+                        <div id="style-2" class="team-list scrollbar">
+                            @foreach (var item in Model)
+                            {
+
+
+                            <div tabindex="0" role="link" class="team-member user-chat-playlists target" style="cursor:pointer;">
+                                <div class="avatar ml-2 imgprofile">
+                                    <img alt="image" src="@item.Image" onerror="this.onerror=null;this.src='../WebAssets/img/avatar-image.png';" style="width: 50px;border-radius: 50%;">
+
+                                </div>
+                                <a href="/Chat/ChatBox?docid=@item.UserID" style="text-decoration:none;font-weight:bold;"> <span class="text-capitalize">@item.FirstName</span> <span>&nbsp;</span><span class="text-capitalize">@item.LastName</span></a>
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+</div>

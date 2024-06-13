@@ -1,0 +1,112 @@
+﻿@model EHealthCare.Models.AdminViewModel
+@{
+    ViewBag.Title = "NewRoomAllotment";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card card-topline-theme">
+            <div class="card-head">
+                <header><i class="fa fa-plus-circle"></i> New Room Allotment</header>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("AddorEditRooms", "AdminDashboard", FormMethod.Post, new { id = "prescriptionform" }))
+                {
+                @Html.HiddenFor(x => x.RoomAllotment.RoomAllotmentID)
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Patient Name</label> <span class="required"> * </span>
+                            @Html.DropDownListFor(m => m.RoomAllotment.PatientID, new SelectList(Model.PatientList,"PatientID","FirstName"),
+                            "Select Patient",new { @class= "form-control input-height",autocomplete="off" })
+                            @Html.ValidationMessageFor(x => x.RoomAllotment.PatientID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Room No</label> <span class="required"> * </span>
+                            @Html.TextBoxFor(x => x.RoomAllotment.Room, new { @class = "form-control input-height", placeholder = "Room No", autocomplete = "off" })
+                            @Html.ValidationMessageFor(x => x.RoomAllotment.Room, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Room Type</label> <span class="required"> * </span>
+                            @Html.DropDownListFor(x => x.RoomAllotment.RoomID, new List<SelectListItem>
+                                {
+                                new SelectListItem{ Text="Normal", Value = "Normal" },
+                                new SelectListItem{ Text="Luxery", Value = "Luxery" },
+                                new SelectListItem{ Text="AirCondtion", Value = "AirCondtion" }
+                                }, "Select Type", new { @class = "form-control input-height", autocomplete = "off" })
+                                @Html.ValidationMessageFor(x => x.RoomAllotment.RoomID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Allotment Date</label> <span class="required"> * </span>
+                            @Html.TextBoxFor(x => x.RoomAllotment.Dated, new { @class = "form-control input-height datepicker", placeholder = "Allotment Date", autocomplete = "off" })
+                            @Html.ValidationMessageFor(x => x.RoomAllotment.Dated, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Discharge Date</label> <span class="required"> * </span>
+                            @Html.TextBoxFor(x => x.RoomAllotment.DischargeDate, new { @class = "form-control input-height", placeholder = "Discharge Date", autocomplete = "off" })
+                            @Html.ValidationMessageFor(x => x.RoomAllotment.DischargeDate, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Duration</label> <span class="required"> * </span>
+                            @Html.TextBoxFor(x => x.RoomAllotment.Duration, new { @class = "form-control input-height", placeholder = "Duration", autocomplete = "off" })
+                            @Html.ValidationMessageFor(x => x.RoomAllotment.Duration, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-info">Save</button>
+                            <button type="button" class="btn btn-default" onclick="reload()">Cancel</button>
+                        </div>
+
+                    </div>
+                </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $("[id*=RoomAllotment_Dated]").datepicker(
+            {
+                changeYear: true,
+                changeMonth: true,
+                dateFormat: 'MM/dd/yy',
+                minDate: new Date(),
+                onSelect: function (selected) {
+                    var dt = new Date(selected);
+                    dt.setDate(dt.getDate());
+                    $("[id*=RoomAllotment_DischargeDate]").datepicker("option", "minDate", dt);
+                }
+            });
+        $("[id*=RoomAllotment_DischargeDate]").datepicker(
+            {
+                changeYear: true,
+                changeMonth: true,
+                dateFormat: 'MM/dd/yy',
+                onSelect: function (selected) {
+                    var dt = new Date(selected);
+                    dt.setDate(dt.getDate() - 1);
+                    $("[id*=RoomAllotment_Dated]").datepicker("option", "maxDate", dt);
+                }
+            });
+    });
+</script>
